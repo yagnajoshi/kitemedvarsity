@@ -1,0 +1,91 @@
+/* custom style for moodle app customization 
+ * Author:  joshuaomotayo
+ * Url:     http://olalekan.pw
+ * Email:   admin@olalekan.pw
+*/
+
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;1,400;1,500&display=swap'); */
+
+body {
+    font-family: 'Montserrat Regular' !important;
+}
+
+ion-app.md, ion-app.ios {
+    font-family: 'Montserrat Regular' !important;
+}
+
+/* default elements */
+video {
+    width: 100% !important;
+}
+
+/* logo */
+
+ion-app.app-root page-core-login-credentials img.login-logo, ion-app.app-root page-core-login-reconnect img.login-logo, ion-app.app-root page-core-login-site img.login-logo, .core-login-site-logo img {
+    width: 100%;
+    max-width: 250px !important;
+    padding: 60px 0 !important
+}
+
+.tabs-md .tabbar, .tabs-ios .tabbar {
+    background: #faf8f5;
+}
+
+.tabs-md .tab-button[aria-selected=true] .tab-button-icon, .tabs-ios .tab-button[aria-selected=true] .tab-button-icon {
+    color: #803e04 !important;
+}
+
+.tabs-md .tab-button .tab-button-icon, .tabs-ios .tab-button .tab-button-icon {
+    color: #f5821f !important;
+}
+
+/* custom course listing */
+.core-course-thumb .core-course-color-img, .core-course-thumb .core-course-color-img img {
+    border-radius: 9px 9px 0 0;
+    width: auto;
+}
+.core-courseoverview .card {
+    border-radius: 15px 15px 0 0;
+}
+.custom-course-title {
+    position: absolute;
+    padding: 0 20px 0 20px;
+    color: #ffffff;
+    top: 10%;
+    font-size: 17px;
+    width: 85%;
+}
+.custom-course-enrolledusercount {
+    position: relative;
+    color: #ffffff;
+    padding-left: 20px;
+    bottom: 20px;
+}
+.custom-course-enrolledusercount span {
+    margin-left: 30px;
+    display: flex;
+}
+.custom-course-enrolledusercount-img {
+    width: 25px;
+}
+.custom-course-thumb {
+    height: 80px;
+    width: auto;
+    right: 10px;
+}
+.core-course-thumb.core-course-color-img {
+    width: 100%;
+    height: auto;
+}
+
+@media only screen and (max-width: 600px) and (min-width: 550px)  {
+    .custom-course-thumb {
+        height: 60px;
+        margin-top: 30px !important;
+    }
+}
+
+/* hide timeline */
+.addon-block-timeline {
+    display: none;
+}

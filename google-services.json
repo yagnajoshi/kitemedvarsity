@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "666157211549",
+    "firebase_url": "https://kite-by-medvarsity.firebaseio.com",
+    "project_id": "kite-by-medvarsity",
+    "storage_bucket": "kite-by-medvarsity.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666157211549:android:9beaac86b7e8cfcf28d974",
+        "android_client_info": {
+          "package_name": "com.medvarsity.kite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "666157211549-39hqggnd182onlmi2d8kejuvdcfpheqq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHsR5Q66dBb5uyNl68nyzcFqdTljiMafQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "666157211549-39hqggnd182onlmi2d8kejuvdcfpheqq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

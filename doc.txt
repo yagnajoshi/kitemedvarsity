@@ -1,0 +1,107 @@
+Steps to customise Moodle mobile APP
+
+Goto https://docs.moodle.org/dev/Setting_up_your_development_environment_for_Moodle_Mobile_2
+
+Follow all in the above link.
+
+**Do not run “npm run setup“ yet
+
+Open the code base with your preferred editor (Sublime, VS Code, Atom, e.t.c)
+
+1) Open config.xml
+
+Edit lines 2-5, Add your custom parameters there, please note, widget id should be the namespace ion your app, it must be unique and most time it is always the reverse of your domain name. e.g (com.example.mobileapp).
+
+Here is how your edit would look like:
+
+<widget id=“com.example.mobileapp” version=“1.0.0” xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<name>Example MobileAPP</name>
+<description>Example official app</description>
+<author email="admin@olalekan.pw" href="http://olalekan.pw">Olalekan Omotayo</author>
+
+2) Open src/config.json
+
+You will need to edit lines 2-6 and 76,77,83,86,88. Lines 2-6 would look like below:
+
+"app_id": "com.example.mobileapp",
+"appname": "Example MobileAPP",
+"desktopappname": "Example MobileAPP Desktop”,
+"versioncode": 1000,
+"versionname": “1.0.0”,
+
+For lines 83, 86,88 all you need do is to add your theme colour so that when the APP loads it changed the status bar colour to your theme colour.
+
+3) Replace the login_logo.png, logo.png and splash.png screen images located in src/assets/img, src/assets/icon, resources/ with your custom images.
+
+When all these is done, you can now run:
+
+npm run setup
+
+Once "npm run setup" finishes, you needs to edit some files in node_modules so that Moodle can build your app with angular AOT.
+
+Angular has 2 ways of compiling: JIT and AOT. Running "ionic serve" or "ionic build" compiles using JIT by default, which is faster to compile but the app takes longer to start.
+
+When building for release you should always compile using AOT, otherwise the app can take too long to start in some devices. The default AOT compiling causes some issues with the database activity and the Mobile support for plugins, so you have to modify a couple of files in order to make this work.
+
+First you need to open the file: node_modules/@angular/platform-browser-dynamic/esm5/platform-browser-dynamic.js. Search the variable called "_NO_RESOURCE_LOADER", you'll see it has a function named "get" with this line:
+
+throw new Error("No ResourceLoader implementation has been provided. Can't read the url "" + url + """);
+
+Remove the above line and put the below code instead:
+
+url = 'templates/' + url;
+
+var resolve;
+var reject;
+var promise = new Promise(function (res, rej) {
+resolve = res;
+reject = rej;
+});
+var xhr = new XMLHttpRequest();
+xhr.open('GET', url, true);
+xhr.responseType = 'text';
+xhr.onload = function () {
+// responseText is the old-school way of retrieving response (supported by IE8 & 9)
+// response/responseType properties were introduced in ResourceLoader Level2 spec (supported by IE10)
+var response = xhr.response || xhr.responseText;
+// normalize IE9 bug (http://bugs.jquery.com/ticket/1450)
+var status = xhr.status === 1223 ? 204 : xhr.status;
+// fix status code when it is 0 (0 status is undocumented).
+// Occurs when accessing file resources or on Android 4.1 stock browser
+// while retrieving files from application cache.
+if (status === 0) {
+status = response ? 200 : 0;
+}
+if (200 <= status && status <= 300) {
+resolve(response);
+}
+else {
+reject("Failed to load " + url);
+}
+};
+xhr.onerror = function () { reject("Failed to load " + url); };
+xhr.send();
+return promise;
+
+Now you need to open the file: node_modules/@ionic/app-scripts/dist/util/config.js. In that file you need to remove the context.isProd condition from the options optimizeJs. So the final code for that part should be like this:
+
+context.optimizeJs = [
+context.optimizeJs,
+hasArg('--optimizeJs')
+].find(function (val) { return typeof val === 'boolean'; });
+
+Finally!!!!
+
+We want to compile in production mode but without optimizing Javascript because that breaks our plugins support. However, Ionic doesn't let you do that, so the only option is to do this change.
+
+With these changes done you can now compile using production mode:
+
+npm run ionic:build -- --prod
+
+This command will generate the app files and put them inside www folder. If you now want to install that app in a real device you can run "cordova run android" or "cordova build ios" (please don't use "ionic cordova ..." or "ionic serve" because it will override your build files!).
+
+Please don not use ionic again once you have edited
+
+did you use node version 11.12.0
+
+Please install node version 11.12.0 first

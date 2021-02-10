@@ -1,0 +1,7 @@
+<!-- Yagna Changed ,commented  for disabling the checkbox click-->
+<button *ngIf="completion" (click)="completionClicked($event)">
+    <img [src]="completionImage" [alt]="completionDescription">
+</button>
+<!-- <button *ngIf="completion">
+    <img [src]="completionImage" [alt]="completionDescription">
+</button> -->
